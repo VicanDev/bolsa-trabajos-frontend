@@ -1,59 +1,78 @@
-# BolsaTrabajosFrontend
+<div align="center">
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.20.
+# 💼 ChambaYa - Portal de Trabajos Temporales
+### *La plataforma definitiva para conectar talentos con oportunidades de manera rápida y segura.*
 
-## Development server
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-En%20Desarrollo-success?style=for-the-badge&logo=git" alt="Status" />
+  <img src="https://img.shields.io/badge/Angular-18%2B-red?style=for-the-badge&logo=angular" alt="Angular" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?style=for-the-badge&logo=springboot" alt="Spring Boot" />
+  <img src="https://img.shields.io/badge/MySQL-Database-blue?style=for-the-badge&logo=mysql" alt="MySQL" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License" />
+</p>
 
-To start a local development server, run:
+</div>
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 📌 Tabla de Contenidos
+*   [✨ Acerca del Proyecto](#-acerca-del-proyecto)
+*   [🚀 Características Principales](#-características-principales)
+*   [🛠️ Tecnologías Utilizadas](#-tecnologías-utilizadas)
+*   [📂 Arquitectura del Sistema](#-arquitectura-del-sistema)
+*   [⚙️ Guía de Instalación y Configuración](#️-guía-de-instalación-y-configuración)
+*   [🔗 Endpoints de la API](#-endpoints-de-la-api)
+*   [👥 Equipo de Desarrollo](#-equipo-de-desarrollo)
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## ✨ Acerca del Proyecto
 
-```bash
-ng generate component component-name
-```
+**ChambaYa** es una aplicación Web Full Stack diseñada para optimizar la búsqueda y gestión de empleos temporales. El sistema cuenta com un entorno robusto de seguridad, persistencia avanzada de datos con encriptación de credenciales y un frontend moderno, dinámico y responsivo construido bajo los más altos estándares de desarrollo web moderno.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🚀 Características Principales
 
-## Building
+*   🔐 **Autenticación y Seguridad:** Integración con *Spring Security* y encriptación de contraseñas mediante *BCrypt*.
+*   👥 **Registro y Gestión de Usuarios:** Creación de cuentas dinámicas con control de roles (*Postulantes* / *Administradores*).
+*   🌐 **Control de CORS:** Configuración avanzada de políticas de intercambio de recursos entre puertos (*Angular 4200* y *Spring Boot 8081*).
+*   📊 **Dashboard Interactivo:** Visualización dinámica de ofertas de trabajo temporales disponibles.
+*   📄 **Detalle de Ofertas y Postulación:** Módulo especializado para consultar los requisitos de cada empleo y postular con un solo clic.
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## 🛠️ Tecnologías Utilizadas
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### **Frontend:**
+*   **Angular** (Framework SPA moderno basado en TypeScript).
+*   **Bootstrap 5** (Diseño de componentes UI responsivos y modernos).
+*   **RxJS & Angular Router** (Manejo de flujos asíncronos y navegación de rutas).
 
-## Running unit tests
+### **Backend & Base de Datos:**
+*   **Java & Spring Boot** (Arquitectura REST API robusta).
+*   **Spring Data JPA & Hibernate** (Mapeo objeto-relacional y gestión automática de esquemas).
+*   **Spring Security** (Protección de endpoints y filtros de seguridad).
+*   **MySQL & MySQL Workbench** (Gestor de base de datos relacional).
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## 📂 Arquitectura del Sistema
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```text
+chamba-ya/
+│
+├── bolsa-trabajos-frontend/      # Repositorio Frontend (Angular SPA)
+│   ├── src/app/
+│   │   ├── login/                # Componente de Autenticación
+│   │   ├── registro/             # Componente de Registro de Usuarios
+│   │   ├── dashboard-postulante/ # Vista principal de Ofertas
+│   │   └── detalle-oferta/       # Vista de detalles y postulación
+│
+└── bolsa-trabajos-backend/       # Repositorio Backend (Spring Boot REST API)
+    ├── src/main/java/com/bolsa/trabajos/
+    │   ├── controller/           # Controladores REST (Auth, Usuarios)
+    │   ├── model/                # Entidades JPA (Usuario)
+    │   ├── repository/           # Interfaces de persistencia de datos
+    │   ├── service/              # Lógica de negocio
+    │   └── security/             # Configuración de Spring Security & CORS
