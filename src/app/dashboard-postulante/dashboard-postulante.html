@@ -1,21 +1,25 @@
 <nav class="navbar navbar-dark bg-primary shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold text-white">💼 ChambaYa</a>
-        <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+        <div>
+            <button class="btn btn-outline-light btn-sm me-2" (click)="verMisPostulaciones()">Mis Postulaciones</button>
+            <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+        </div>
     </div>
 </nav>
 
 <div class="container mt-5">
-    <h3 class="fw-bold mb-4">Ofertas de Trabajo Disponibles</h3>
+    <h3 class="fw-bold mb-1">Bienvenido, {{ nombreUsuario }}</h3>
+    <p class="text-muted mb-4">Ofertas de Trabajo Disponibles</p>
     <div class="row">
         <div class="col-md-4 mb-4" *ngFor="let oferta of ofertas">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="card-title fw-bold text-primary">{{ oferta.titulo }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ oferta.empresa }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ oferta.empleador?.razonSocial }}</h6>
                     <p class="card-text mt-3">
                         <strong>📍 Ubicación:</strong> {{ oferta.ubicacion }}<br>
-                        <strong>💰 Salario:</strong> {{ oferta.salario }}
+                        <strong>⏱ Duración:</strong> {{ oferta.duracion }}
                     </p>
                 </div>
                 <div class="card-footer bg-white border-0 pb-3 text-center">
@@ -24,4 +28,5 @@
             </div>
         </div>
     </div>
+    <div *ngIf="ofertas.length === 0" class="alert alert-info">No hay ofertas disponibles en este momento.</div>
 </div>

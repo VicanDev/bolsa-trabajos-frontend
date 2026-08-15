@@ -8,22 +8,38 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <button class="btn btn-outline-secondary mb-3" (click)="volver()">⬅ Volver a las ofertas</button>
-            <div class="card shadow border-0 p-4">
-                <h2 class="fw-bold text-primary mb-1">Detalle del Puesto</h2>
+            
+            <div *ngIf="oferta" class="card shadow border-0 p-4">
+                <h2 class="fw-bold text-primary mb-1">{{ oferta.titulo }}</h2>
+                <h5 class="text-muted">{{ oferta.empleador?.razonSocial }}</h5>
                 <hr>
+                <p><strong>📍 Ubicación:</strong> {{ oferta.ubicacion }}</p>
+                <p><strong>⏱ Duración:</strong> {{ oferta.duracion }}</p>
+                <p><strong>📅 Publicado:</strong> {{ oferta.fechaPublicacion }}</p>
+                
                 <h5 class="mt-3"><strong>Descripción:</strong></h5>
-                <p>Buscamos a un profesional altamente motivado para unirse a nuestro equipo de trabajo. Se requiere responsabilidad, trabajo en equipo y disponibilidad inmediata.</p>
+                <p>{{ oferta.descripcion }}</p>
+                
                 <h5 class="mt-3"><strong>Requisitos:</strong></h5>
-                <ul>
-                    <li>Experiencia comprobada en el área.</li>
-                    <li>Disponibilidad de tiempo completo.</li>
-                    <li>Ganas de aprender y aportar valor.</li>
-                </ul>
+                <p>{{ oferta.requisitos }}</p>
+                
+                <div *ngIf="mensaje" class="alert alert-success mt-3 text-center fw-bold">
+                    {{ mensaje }}
+                </div>
+                <div *ngIf="error" class="alert alert-danger mt-3 text-center fw-bold">
+                    {{ error }}
+                </div>
+                
                 <div class="alert alert-warning mt-4 text-center">
                     Al hacer clic en "Postular", tu CV será enviado a la empresa.
                 </div>
                 <button class="btn btn-success btn-lg w-100 fw-bold mt-2" (click)="postular()">Postular Ahora</button>
             </div>
+
+            <div *ngIf="!oferta && !error" class="text-center mt-5">
+                <p class="text-muted">Cargando oferta...</p>
+            </div>
+            <div *ngIf="error && !oferta" class="alert alert-danger mt-3">{{ error }}</div>
         </div>
     </div>
 </div>

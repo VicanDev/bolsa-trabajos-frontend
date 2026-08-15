@@ -1,0 +1,45 @@
+<nav class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-white">💼 ChambaYa</a>
+        <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <button class="btn btn-outline-secondary mb-3" (click)="volver()">⬅ Volver al Dashboard</button>
+    
+    <h3 class="fw-bold mb-4">Mis Postulaciones</h3>
+    
+    <div class="table-responsive" *ngIf="postulaciones.length > 0">
+        <table class="table table-hover shadow-sm">
+            <thead class="table-primary">
+                <tr>
+                    <th>Oferta</th>
+                    <th>Empresa</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of postulaciones">
+                    <td class="fw-bold">{{ p.oferta?.titulo }}</td>
+                    <td>{{ p.oferta?.empleador?.razonSocial }}</td>
+                    <td>{{ p.fechaPostulacion }}</td>
+                    <td>
+                        <span class="badge" 
+                              [ngClass]="{
+                                'bg-warning text-dark': p.estado === 'PENDIENTE',
+                                'bg-success': p.estado === 'ACEPTADO',
+                                'bg-danger': p.estado === 'RECHAZADO',
+                                'bg-info': p.estado !== 'PENDIENTE' && p.estado !== 'ACEPTADO' && p.estado !== 'RECHAZADO'
+                              }">
+                            {{ p.estado }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div *ngIf="postulaciones.length === 0" class="alert alert-info">Aún no has postulado a ninguna oferta.</div>
+</div>
