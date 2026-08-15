@@ -14,6 +14,7 @@ export class Registro {
   nombre: string = '';
   correo: string = '';
   password: string = '';
+  rol: string = '';
   mensaje: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -24,7 +25,7 @@ export class Registro {
       nombre: this.nombre, 
       correo: this.correo, 
       password: this.password,
-      rol: 'Michael'
+      rol: this.rol
     };
 
     this.http.post(url, body).subscribe({

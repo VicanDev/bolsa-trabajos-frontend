@@ -15,9 +15,16 @@
                     <label class="form-label fw-bold">Correo Electrónico</label>
                     <input type="email" name="correo" [(ngModel)]="correo" class="form-control" placeholder="ejemplo@trabajos.com" required>
                 </div>
-                <div class="mb-4">
+                <div class="mb-3">
                     <label class="form-label fw-bold">Contraseña</label>
                     <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="******" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Rol</label>
+                    <select name="rol" [(ngModel)]="rol" class="form-control" required>
+                        <option value="POSTULANTE">Postulante</option>
+                        <option value="EMPLEADOR">Empleador</option>
+                    </select>
                 </div>
                 
                 <div *ngIf="mensaje" class="alert alert-info mt-2 text-center fw-bold">
