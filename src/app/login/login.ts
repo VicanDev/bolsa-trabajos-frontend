@@ -23,7 +23,17 @@ export class Login {
 
     this.http.post(url, body).subscribe({
       next: (respuesta: any) => {
-        this.router.navigate(['/dashboard']);
+        // Guardar la sesión en localStorage
+        localStorage.setItem('id', respuesta.id);
+        localStorage.setItem('nombre', respuesta.nombre);
+        localStorage.setItem('rol', respuesta.rol);
+
+        // Navegar según el rol
+        if (respuesta.rol === 'EMPLEADOR') {
+          this.router.navigate(['/dashboard-empleador']);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.mensaje = 'Error de conexión o credenciales incorrectas.';

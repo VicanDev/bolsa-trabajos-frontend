@@ -1,0 +1,34 @@
+<nav class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-white">💼 ChambaYa</a>
+        <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h3 class="fw-bold mb-1">Bienvenido, {{ nombreUsuario }}</h3>
+    <p class="text-muted">Panel de Empleador</p>
+
+    <button class="btn btn-success mb-4 fw-bold" (click)="crearOferta()">+ Publicar Nueva Oferta</button>
+
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let oferta of ofertas">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-primary">{{ oferta.titulo }}</h5>
+                    <p class="card-text mt-2">
+                        <strong>📍 Ubicación:</strong> {{ oferta.ubicacion }}<br>
+                        <strong>⏱ Duración:</strong> {{ oferta.duracion }}<br>
+                        <strong>📊 Estado:</strong> <span class="badge bg-success">{{ oferta.estado }}</span>
+                    </p>
+                    <p class="text-muted small">{{ oferta.descripcion | slice:0:100 }}...</p>
+                </div>
+                <div class="card-footer bg-white border-0 pb-3 text-center">
+                    <button class="btn btn-danger btn-sm w-100 fw-bold" (click)="eliminarOferta(oferta.id)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="ofertas.length === 0" class="alert alert-info">No tienes ofertas publicadas aún.</div>
+</div>

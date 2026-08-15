@@ -1,0 +1,56 @@
+<nav class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-white">💼 ChambaYa</a>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <button class="btn btn-outline-secondary mb-3" (click)="volver()">⬅ Volver al Dashboard</button>
+            
+            <div class="card shadow border-0 p-4">
+                <h3 class="fw-bold text-primary mb-4">Publicar Nueva Oferta</h3>
+                
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Título del puesto *</label>
+                        <input type="text" class="form-control" [(ngModel)]="titulo" name="titulo" placeholder="Ej: Desarrollador Frontend" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Descripción</label>
+                        <textarea class="form-control" [(ngModel)]="descripcion" name="descripcion" rows="4" placeholder="Describe las responsabilidades del puesto..."></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Ubicación</label>
+                        <input type="text" class="form-control" [(ngModel)]="ubicacion" name="ubicacion" placeholder="Ej: Lima, Remoto">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Duración</label>
+                        <input type="text" class="form-control" [(ngModel)]="duracion" name="duracion" placeholder="Ej: 3 meses">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Requisitos</label>
+                        <textarea class="form-control" [(ngModel)]="requisitos" name="requisitos" rows="3" placeholder="Lista los requisitos del puesto..."></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Categoría</label>
+                        <select class="form-select" [(ngModel)]="idCategoria" name="idCategoria">
+                            <option *ngFor="let cat of categorias" [ngValue]="cat.id">{{ cat.nombre }}</option>
+                        </select>
+                    </div>
+                    
+                    <div *ngIf="mensaje" class="alert alert-success text-center fw-bold">{{ mensaje }}</div>
+                    <div *ngIf="error" class="alert alert-danger text-center fw-bold">{{ error }}</div>
+                    
+                    <button type="button" class="btn btn-primary w-100 fw-bold py-2" (click)="guardarOferta()">Publicar Oferta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
