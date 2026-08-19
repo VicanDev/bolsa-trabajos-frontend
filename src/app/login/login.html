@@ -1,0 +1,29 @@
+<div class="auth-page">
+    <div class="auth-card fade-in-up">
+        <div class="auth-brand">
+            <span class="app-logo-mark">💼</span>
+            <div>
+                <h2 class="auth-title">ChambaYa</h2>
+                <p class="auth-subtitle">Portal de Trabajos Temporales</p>
+            </div>
+        </div>
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" name="correo" [(ngModel)]="correo" class="form-control" placeholder="ejemplo@trabajos.com" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="clave" [(ngModel)]="clave" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="button" (click)="iniciarSesion()" [disabled]="cargando" class="btn btn-primary w-100 btn-lg btn-block-loading">
+                <span *ngIf="cargando" class="spinner-border spinner-border-sm"></span>
+                {{ cargando ? 'Ingresando...' : 'Iniciar Sesión' }}
+            </button>
+        </form>
+
+        <p class="auth-footer">¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
+    </div>
+</div>

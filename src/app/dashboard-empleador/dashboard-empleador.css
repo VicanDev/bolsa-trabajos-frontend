@@ -1,0 +1,166 @@
+.hero-with-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.job-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+/* -------------------------------------------------------------- */
+/* Filtros modernos                                                 */
+/* -------------------------------------------------------------- */
+
+.filtros-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.75rem;
+}
+
+.filtro-busqueda {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1 1 260px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.55rem 0.9rem;
+    background: var(--color-bg);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filtro-busqueda:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-light);
+    background: var(--color-surface);
+}
+
+.filtro-icono {
+    font-size: 0.95rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.filtro-input {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    flex: 1;
+    box-shadow: none !important;
+    font-size: 0.95rem;
+}
+
+.filtro-select {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 200px;
+    font-weight: 600;
+    color: var(--color-primary);
+    border-color: var(--color-primary-light);
+    background-color: var(--color-primary-light);
+}
+
+.filtro-select:focus {
+    border-color: var(--color-primary);
+}
+
+/* -------------------------------------------------------------- */
+/* Acciones de la tarjeta                                           */
+/* -------------------------------------------------------------- */
+
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card-actions .btn {
+    width: 100%;
+}
+
+.btn-indigo-soft {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+    box-shadow: none;
+}
+
+.btn-indigo-soft:hover {
+    background: var(--color-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-primary);
+}
+
+/* -------------------------------------------------------------- */
+/* Paneles expandibles (editar / postulantes)                       */
+/* -------------------------------------------------------------- */
+
+.panel-expandible {
+    border-top: 3px solid var(--color-primary) !important;
+}
+
+.postulante-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.postulante-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.postulante-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem;
+    flex: 1 1 200px;
+    flex-wrap: wrap;
+}
+
+.postulante-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.postulante-correo,
+.postulante-habilidades {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+.postulante-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.cv-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}

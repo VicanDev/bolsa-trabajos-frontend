@@ -1,0 +1,175 @@
+<nav class="app-navbar">
+    <div class="app-navbar-inner">
+        <a class="app-logo"><span class="app-logo-mark">💼</span> ChambaYa</a>
+        <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+</nav>
+
+<header class="dashboard-hero">
+    <div class="dashboard-hero-overlay"></div>
+    <div class="dashboard-hero-content page-container fade-in-up hero-with-action">
+        <div>
+            <p class="hero-eyebrow">Panel de Empleador</p>
+            <h1 class="hero-title">Bienvenido, {{ nombreUsuario }}</h1>
+            <p class="hero-subtitle">Gestiona tus ofertas de trabajo publicadas</p>
+        </div>
+        <button class="btn btn-success btn-lg" (click)="crearOferta()">+ Publicar Nueva Oferta</button>
+    </div>
+</header>
+
+<div class="page-container">
+
+    <div class="filtros-bar fade-in-up" *ngIf="ofertas.length > 0">
+        <div class="filtro-busqueda">
+            <span class="filtro-icono">🔍</span>
+            <input
+                type="text"
+                class="form-control filtro-input"
+                placeholder="Buscar oferta por título..."
+                [(ngModel)]="busqueda"
+                name="busqueda"
+            >
+        </div>
+        <select class="form-select filtro-select" [(ngModel)]="orden" name="orden">
+            <option value="recientes">Más Recientes</option>
+            <option value="postulados">Más Postulados</option>
+            <option value="pendientes">Más Pendientes</option>
+            <option value="aceptados">Más Aceptados</option>
+            <option value="rechazados">Más Rechazados</option>
+        </select>
+    </div>
+
+    <div class="row stagger">
+        <div class="col-md-4 mb-4" *ngFor="let oferta of ofertasFiltradas">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title text-primary mb-0">{{ oferta.titulo }}</h5>
+                        <span class="badge bg-success">{{ oferta.estado }}</span>
+                    </div>
+                    <p class="card-text mt-2 job-meta">
+                        <span>📍 {{ oferta.ubicacion }}</span>
+                        <span>⏱ {{ oferta.duracion }}</span>
+                        <span>🏷 {{ oferta.categoria }}</span>
+                    </p>
+                    <p class="small mb-0 mt-2">{{ oferta.descripcion | slice:0:100 }}...</p>
+                </div>
+                <div class="card-footer bg-white pb-3">
+                    <div class="card-actions">
+                        <button class="btn btn-indigo-soft btn-sm" (click)="toggleEditar(oferta)">
+                            ✏️ Editar Oferta
+                        </button>
+                        <button class="btn btn-indigo-soft btn-sm" (click)="togglePostulantes(oferta)">
+                            👥 Ver Postulantes ({{ oferta.totalPostulaciones }})
+                        </button>
+                        <button class="btn btn-danger btn-sm" (click)="eliminarOferta(oferta.id)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card panel-expandible fade-in mt-2" *ngIf="oferta.editando">
+                <div class="card-body">
+                    <p class="page-eyebrow mb-2">Editar oferta</p>
+
+                    <div class="mb-2">
+                        <label class="form-label">Título</label>
+                        <input type="text" class="form-control" [(ngModel)]="oferta.formEdicion!.titulo" name="titulo-{{ oferta.id }}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" rows="3" [(ngModel)]="oferta.formEdicion!.descripcion" name="descripcion-{{ oferta.id }}"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-2">
+                            <label class="form-label">Ubicación</label>
+                            <input type="text" class="form-control" [(ngModel)]="oferta.formEdicion!.ubicacion" name="ubicacion-{{ oferta.id }}">
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label class="form-label">Duración</label>
+                            <input type="text" class="form-control" [(ngModel)]="oferta.formEdicion!.duracion" name="duracion-{{ oferta.id }}">
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Categoría</label>
+                        <select class="form-select" [(ngModel)]="oferta.formEdicion!.idCategoria" name="categoria-{{ oferta.id }}">
+                            <option *ngFor="let cat of categorias" [ngValue]="cat.id">{{ cat.nombre }}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Requisitos</label>
+                        <textarea class="form-control" rows="2" [(ngModel)]="oferta.formEdicion!.requisitos" name="requisitos-{{ oferta.id }}"></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button
+                            class="btn btn-primary btn-sm flex-fill btn-block-loading"
+                            [disabled]="oferta.guardandoEdicion"
+                            (click)="guardarEdicion(oferta)"
+                        >
+                            <span *ngIf="oferta.guardandoEdicion" class="spinner-border spinner-border-sm"></span>
+                            {{ oferta.guardandoEdicion ? 'Guardando...' : 'Guardar Cambios' }}
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm" (click)="cancelarEdicion(oferta)">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card panel-expandible fade-in mt-2" *ngIf="oferta.mostrandoPostulantes">
+                <div class="card-body">
+                    <p class="page-eyebrow mb-2">Postulantes</p>
+
+                    <div *ngIf="oferta.cargandoPostulantes" class="text-center py-3">
+                        <span class="spinner-border spinner-border-sm"></span>
+                    </div>
+
+                    <div *ngIf="!oferta.cargandoPostulantes && (oferta.postulantes?.length ?? 0) === 0" class="alert alert-info mb-0">
+                        Aún no hay postulantes para esta oferta.
+                    </div>
+
+                    <div class="postulante-row" *ngFor="let p of oferta.postulantes">
+                        <div class="postulante-info">
+                            <div class="postulante-datos">
+                                <strong>{{ p.nombre }}</strong>
+                                <span class="postulante-correo">{{ p.correo }}</span>
+                                <span class="postulante-habilidades" *ngIf="p.habilidades">🛠 {{ p.habilidades }}</span>
+                                <a
+                                    *ngIf="p.cvUrl"
+                                    [href]="p.cvUrl"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="cv-link"
+                                >Ver CV</a>
+                            </div>
+                            <span
+                                class="badge"
+                                [ngClass]="{
+                                    'bg-warning text-dark': p.estado === 'PENDIENTE',
+                                    'bg-success': p.estado === 'ACEPTADO',
+                                    'bg-danger': p.estado === 'RECHAZADO'
+                                }"
+                            >{{ p.estado }}</span>
+                        </div>
+                        <div class="postulante-actions">
+                            <button
+                                *ngIf="p.estado !== 'ACEPTADO'"
+                                class="btn btn-success btn-sm"
+                                [disabled]="p.procesando"
+                                (click)="cambiarEstado(oferta, p, 'ACEPTADO')"
+                            >Aceptar</button>
+                            <button
+                                *ngIf="p.estado !== 'RECHAZADO'"
+                                class="btn btn-danger btn-sm"
+                                [disabled]="p.procesando"
+                                (click)="cambiarEstado(oferta, p, 'RECHAZADO')"
+                            >Rechazar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!cargando && ofertas.length === 0" class="alert alert-info fade-in">No tienes ofertas publicadas aún.</div>
+    <div *ngIf="!cargando && ofertas.length > 0 && ofertasFiltradas.length === 0" class="alert alert-info fade-in">No se encontraron ofertas con ese título.</div>
+    <div *ngIf="cargando" class="text-center mt-5"><p>Cargando ofertas...</p></div>
+</div>

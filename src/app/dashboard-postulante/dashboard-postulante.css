@@ -1,0 +1,57 @@
+.job-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+.card-subtitle {
+    color: var(--color-text-subtle) !important;
+    font-size: 0.85rem;
+}
+
+/* -------------------------------------------------------------- */
+/* Modal "Mi Perfil"                                                */
+/* -------------------------------------------------------------- */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-close-modal {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-pill);
+    width: 2rem;
+    height: 2rem;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-close-modal:hover {
+    background: var(--color-danger-light);
+    color: var(--color-danger-hover);
+}

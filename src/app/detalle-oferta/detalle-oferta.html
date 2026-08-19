@@ -1,0 +1,50 @@
+<nav class="app-navbar">
+    <div class="app-navbar-inner">
+        <a class="app-logo"><span class="app-logo-mark">💼</span> ChambaYa</a>
+    </div>
+</nav>
+
+<div class="page-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <button class="btn btn-outline-secondary mb-3" (click)="volver()">⬅ Volver a las ofertas</button>
+
+            <div *ngIf="oferta" class="card p-4 fade-in-up">
+                <div class="card-body">
+                    <p class="page-eyebrow">{{ oferta.empleador?.razonSocial }}</p>
+                    <h2 class="mb-1">{{ oferta.titulo }}</h2>
+                    <div class="offer-meta">
+                        <span>📍 {{ oferta.ubicacion }}</span>
+                        <span>⏱ {{ oferta.duracion }}</span>
+                        <span>📅 {{ oferta.fechaPublicacion }}</span>
+                    </div>
+
+                    <hr>
+
+                    <h5 class="section-title">Descripción</h5>
+                    <p>{{ oferta.descripcion }}</p>
+
+                    <h5 class="section-title mt-4">Requisitos</h5>
+                    <p>{{ oferta.requisitos }}</p>
+
+                    <div *ngIf="mensaje" class="alert alert-success mt-3 text-center">
+                        {{ mensaje }}
+                    </div>
+
+                    <div class="alert alert-warning mt-4 text-center">
+                        Al hacer clic en "Postular", tu CV será enviado a la empresa.
+                    </div>
+                    <button class="btn btn-success btn-lg w-100 btn-block-loading mt-2" [disabled]="postulando" (click)="postular()">
+                        <span *ngIf="postulando" class="spinner-border spinner-border-sm"></span>
+                        {{ postulando ? 'Postulando...' : 'Postular Ahora' }}
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="cargando" class="text-center mt-5">
+                <p>Cargando oferta...</p>
+            </div>
+            <div *ngIf="!cargando && !oferta" class="alert alert-danger mt-3 fade-in">No se pudo cargar la oferta.</div>
+        </div>
+    </div>
+</div>

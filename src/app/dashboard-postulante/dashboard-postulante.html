@@ -1,0 +1,101 @@
+<nav class="app-navbar">
+    <div class="app-navbar-inner">
+        <a class="app-logo"><span class="app-logo-mark">💼</span> ChambaYa</a>
+        <div class="app-navbar-actions">
+            <button class="btn btn-outline-secondary btn-sm" (click)="abrirPerfil()">Mi Perfil</button>
+            <button class="btn btn-outline-secondary btn-sm" (click)="verMisPostulaciones()">Mis Postulaciones</button>
+            <button class="btn btn-outline-light btn-sm" (click)="cerrarSesion()">Cerrar Sesión</button>
+        </div>
+    </div>
+</nav>
+
+<div class="modal-overlay fade-in" *ngIf="mostrarPerfil" (click)="cerrarPerfil()">
+    <div class="card modal-card fade-in-up" (click)="$event.stopPropagation()">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <p class="page-eyebrow mb-1">Mi cuenta</p>
+                    <h4 class="mb-0">Mi Perfil</h4>
+                </div>
+                <button type="button" class="btn-close-modal" (click)="cerrarPerfil()" aria-label="Cerrar">✕</button>
+            </div>
+
+            <div *ngIf="cargandoPerfil" class="text-center py-4">
+                <span class="spinner-border spinner-border-sm"></span>
+            </div>
+
+            <form *ngIf="!cargandoPerfil">
+                <div class="mb-3">
+                    <label class="form-label">URL de CV</label>
+                    <input type="text" class="form-control" [(ngModel)]="perfil.cvUrl" name="cvUrl" placeholder="https://...">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Habilidades</label>
+                    <textarea class="form-control" rows="3" [(ngModel)]="perfil.habilidades" name="habilidades" placeholder="Ej: Angular, Java, SQL"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Disponibilidad</label>
+                    <input type="text" class="form-control" [(ngModel)]="perfil.disponibilidad" name="disponibilidad" placeholder="Ej: Inmediata, medio tiempo">
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button
+                        type="button"
+                        class="btn btn-primary flex-fill btn-block-loading"
+                        [disabled]="guardandoPerfil"
+                        (click)="guardarPerfil()"
+                    >
+                        <span *ngIf="guardandoPerfil" class="spinner-border spinner-border-sm"></span>
+                        {{ guardandoPerfil ? 'Guardando...' : 'Guardar Cambios' }}
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" (click)="cerrarPerfil()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<header class="dashboard-hero">
+    <div class="dashboard-hero-overlay"></div>
+    <div class="dashboard-hero-content page-container fade-in-up">
+        <p class="hero-eyebrow">Panel del Postulante</p>
+        <h1 class="hero-title">Bienvenido, {{ nombreUsuario }}</h1>
+        <p class="hero-subtitle">Explora las mejores oportunidades de trabajo temporal, listas para ti.</p>
+    </div>
+</header>
+
+<div class="page-container">
+    <div class="row stagger">
+        <div class="col-md-4 mb-4" *ngFor="let oferta of ofertas">
+            <div class="card card-interactive h-100" (click)="verDetalle(oferta.id)">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h5 class="card-title text-primary mb-0">{{ oferta.titulo }}</h5>
+                        <span
+                            *ngIf="oferta.estadoPostulacion"
+                            class="badge"
+                            [ngClass]="{
+                                'bg-warning text-dark': oferta.estadoPostulacion === 'PENDIENTE',
+                                'bg-success': oferta.estadoPostulacion === 'ACEPTADO',
+                                'bg-danger': oferta.estadoPostulacion === 'RECHAZADO'
+                            }"
+                        >{{ oferta.estadoPostulacion }}</span>
+                    </div>
+                    <h6 class="card-subtitle mb-3">{{ oferta.empleador?.razonSocial }}</h6>
+                    <p class="card-text mt-3 mb-0 job-meta">
+                        <span>📍 {{ oferta.ubicacion }}</span>
+                        <span>⏱ {{ oferta.duracion }}</span>
+                    </p>
+                </div>
+                <div class="card-footer bg-white pb-3 text-center">
+                    <button class="btn btn-primary w-100" [disabled]="!!oferta.estadoPostulacion" (click)="verDetalle(oferta.id)">
+                        {{ oferta.estadoPostulacion ? 'Ya postulaste' : 'Ver Detalles' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!cargando && ofertas.length === 0" class="alert alert-info fade-in">No hay ofertas disponibles en este momento.</div>
+    <div *ngIf="cargando" class="text-center mt-5"><p>Cargando ofertas...</p></div>
+</div>

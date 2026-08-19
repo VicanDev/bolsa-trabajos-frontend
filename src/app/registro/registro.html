@@ -1,0 +1,59 @@
+<div class="auth-page">
+    <div class="auth-card fade-in-up">
+        <div class="auth-brand">
+            <span class="app-logo-mark app-logo-mark-success">📝</span>
+            <div>
+                <h2 class="auth-title">Registro</h2>
+                <p class="auth-subtitle">Crea tu cuenta en ChambaYa</p>
+            </div>
+        </div>
+
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Nombre Completo</label>
+                <input type="text" name="nombre" [(ngModel)]="nombre" class="form-control" placeholder="Ej. Juan Pérez" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" name="correo" [(ngModel)]="correo" class="form-control" placeholder="ejemplo@trabajos.com" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="••••••••" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Rol</label>
+                <select name="rol" [(ngModel)]="rol" class="form-select" required>
+                    <option value="POSTULANTE">Postulante</option>
+                    <option value="EMPLEADOR">Empleador</option>
+                </select>
+            </div>
+
+            <ng-container *ngIf="rol === 'EMPLEADOR'">
+                <div class="mb-3 fade-in">
+                    <label class="form-label">Razón Social</label>
+                    <input type="text" name="razonSocial" [(ngModel)]="razonSocial" class="form-control" placeholder="Ej. Tech Corp SAC" required>
+                </div>
+                <div class="mb-3 fade-in">
+                    <label class="form-label">RUC</label>
+                    <input type="text" name="ruc" [(ngModel)]="ruc" class="form-control" placeholder="Ej. 20506070809" required>
+                </div>
+                <div class="mb-3 fade-in">
+                    <label class="form-label">Descripción de la empresa (opcional)</label>
+                    <textarea name="descripcionEmpresa" [(ngModel)]="descripcionEmpresa" class="form-control" rows="2" placeholder="Cuéntanos a qué se dedica tu empresa"></textarea>
+                </div>
+            </ng-container>
+
+            <div *ngIf="mensaje" class="alert alert-info text-center">
+                {{ mensaje }}
+            </div>
+
+            <button type="button" (click)="registrar()" [disabled]="cargando" class="btn btn-success w-100 btn-lg btn-block-loading">
+                <span *ngIf="cargando" class="spinner-border spinner-border-sm"></span>
+                {{ cargando ? 'Creando cuenta...' : 'Crear Cuenta' }}
+            </button>
+        </form>
+
+        <p class="auth-footer">¿Ya tienes cuenta? <a href="/login" class="auth-link-success">Inicia sesión</a></p>
+    </div>
+</div>
